@@ -17,6 +17,8 @@ FROM build AS publish
 RUN dotnet publish "koeapp04.csproj" -c Release -o /app/publish
 
 FROM base AS final
+COPY koeapp04.pfx /root/.aspnet/https/
+COPY secrets.json /root/.microsoft/usersecrets/8df05b1d-e07b-4b82-bee6-798316ced0a1/
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "koeapp04.dll"]
